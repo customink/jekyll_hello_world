@@ -1,0 +1,10 @@
+{
+  "pipelineName": "hello-jekyll-cli",
+  "stageName": "Deploy",
+  "actionName": "Approve",
+  "token": "5c889d05-c7a0-4b2b-a8be-99726a823776",
+  "result": {
+    "status": "Approved",
+    "summary": "approved via the cli!"
+  }
+}

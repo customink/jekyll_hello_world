@@ -1,0 +1,112 @@
+{
+  "pipeline": {
+    "roleArn": "arn:aws:iam::831702759394:role/service-role/AWSCodePipelineServiceRole-us-east-1-hello-jekyll-gui",
+    "stages": [
+      {
+        "name": "Source",
+        "actions": [
+          {
+            "name": "Source",
+            "actionTypeId": {
+              "category": "Source",
+              "owner": "ThirdParty",
+              "provider": "GitHub",
+              "version": "1"
+            },
+            "configuration": {
+              "Branch": "master",
+              "OAuthToken": "85add2e164e573db5ffad856a48275ec276341f0",
+              "Owner": "customink",
+              "PollForSourceChanges": "false",
+              "Repo": "jekyll_hello_world"
+            },
+            "outputArtifacts": [
+              {
+                "name": "SourceArtifact"
+              }
+            ],
+            "inputArtifacts": [],
+            "region": "us-east-1",
+            "runOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "Build",
+        "actions": [
+          {
+            "name": "Build",
+            "actionTypeId": {
+              "category": "Build",
+              "owner": "AWS",
+              "provider": "CodeBuild",
+              "version": "1"
+            },
+            "runOrder": 1,
+            "configuration": {
+              "ProjectName": "hello-jekyll-gui-build"
+            },
+            "outputArtifacts": [
+              {
+                "name": "BuildArtifact"
+              }
+            ],
+            "inputArtifacts": [
+              {
+                "name": "SourceArtifact"
+              }
+            ],
+            "region": "us-east-1"
+          }
+        ]
+      },
+      {
+        "name": "Deploy",
+        "actions": [
+          {
+            "name": "Approve",
+            "actionTypeId": {
+              "category": "Approval",
+              "owner": "AWS",
+              "provider": "Manual",
+              "version": "1"
+            },
+            "runOrder": 1,
+            "configuration": {},
+            "outputArtifacts": [],
+            "inputArtifacts": [],
+            "region": "us-east-1"
+          },
+          {
+            "name": "Deploy",
+            "actionTypeId": {
+              "category": "Deploy",
+              "owner": "AWS",
+              "provider": "S3",
+              "version": "1"
+            },
+            "runOrder": 2,
+            "configuration": {
+              "BucketName": "hello-jekyll-cli-bucket",
+              "Extract": "true",
+              "ObjectKey": "blog"
+            },
+            "outputArtifacts": [],
+            "inputArtifacts": [
+              {
+                "name": "BuildArtifact"
+              }
+            ],
+            "region": "us-east-1"
+          }
+        ]
+      }
+    ],
+    "artifactStore": {
+      "type": "S3",
+      "location": "codepipeline-us-east-1-hello-jekyll-cli"
+    },
+    "name": "hello-jekyll-cli",
+    "version": 1
+  }
+}
