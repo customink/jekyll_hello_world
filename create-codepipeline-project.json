@@ -15,7 +15,7 @@
             },
             "configuration": {
               "Branch": "master",
-              "OAuthToken": "85add2e164e573db5ffad856a48275ec276341f0",
+              "OAuthToken": "FILL_ME_IN",
               "Owner": "customink",
               "PollForSourceChanges": "false",
               "Repo": "jekyll_hello_world"
